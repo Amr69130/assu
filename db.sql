@@ -1,41 +1,47 @@
-CREATE TABLE assurances (
+DROP DATABASE assu;
+CREATE DATABASE assu;
+
+USE assu;
+
+
+CREATE TABLE assurance (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(255) UNIQUE NOT NULL
+    nom VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE contrats (
+CREATE TABLE contrat (
     id INT AUTO_INCREMENT PRIMARY KEY,
     assurance_id INT,
     nom VARCHAR(255) NOT NULL,
-    FOREIGN KEY (assurance_id) REFERENCES assurances(id)
+    FOREIGN KEY (assurance_id) REFERENCES assurance(id)
 );
 
-CREATE TABLE garanties (
+CREATE TABLE garantie (
     id INT AUTO_INCREMENT PRIMARY KEY,
     contrat_id INT,
     garantie VARCHAR(255) NOT NULL,
-    FOREIGN KEY (contrat_id) REFERENCES contrats(id)
+    FOREIGN KEY (contrat_id) REFERENCES contrat(id)
 );
 
-CREATE TABLE prix_moyen (
+CREATE TABLE prix_contrat (
     id INT AUTO_INCREMENT PRIMARY KEY,
     contrat_id INT,
     type_vehicule ENUM('citadine', 'berline', 'utilitaire') NOT NULL,
     prix DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (contrat_id) REFERENCES contrats(id)
+    FOREIGN KEY (contrat_id) REFERENCES contrat(id)
 );
 
 -- Insertion des données
-INSERT INTO assurances (nom) VALUES ('AssurAuto+'), ('SafeDrive'), ('ZenAssur'), ('AutoSécure');
+INSERT INTO assurance (nom) VALUES ('AssurAuto+'), ('SafeDrive'), ('ZenAssur'), ('AutoSécure');
 
-INSERT INTO contrats (assurance_id, nom) VALUES 
+INSERT INTO contrat (assurance_id, nom) VALUES 
 (1, 'Eco'), (1, 'PlusPlus'), 
 (2, 'Eco'), (2, 'PlusPlus'), 
 (3, 'Eco'), (3, 'PlusPlus'), 
 (4, 'Eco'), (4, 'PlusPlus');
 
 -- Garanties pour chaque contrat
-INSERT INTO garanties (contrat_id, garantie) VALUES 
+INSERT INTO garantie (contrat_id, garantie) VALUES 
 (1, 'Responsabilité civile'), (1, 'Assistance minimale'), 
 (2, 'Tous risques'), (2, 'Assistance 24/7'), (2, 'Véhicule de remplacement'), 
 (3, 'Responsabilité civile'), (3, 'Bris de glace'), 
@@ -46,7 +52,7 @@ INSERT INTO garanties (contrat_id, garantie) VALUES
 (8, 'Tous risques'), (8, 'Garantie accessoires'), (8, '0km dépannage');
 
 -- Prix moyens
-INSERT INTO prix_moyen (contrat_id, type_vehicule, prix) VALUES 
+INSERT INTO prix_contrat (contrat_id, type_vehicule, prix) VALUES 
 (1, 'citadine', 25), (1, 'berline', 35), (1, 'utilitaire', 40),
 (2, 'citadine', 45), (2, 'berline', 60), (2, 'utilitaire', 70),
 (3, 'citadine', 22), (3, 'berline', 30), (3, 'utilitaire', 38),
