@@ -6,8 +6,10 @@ USE insurance;
 CREATE TABLE insurance (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE contract (
 CREATE TABLE contract (
     id INT AUTO_INCREMENT PRIMARY KEY,
     insurance_id INT,
@@ -16,14 +18,23 @@ CREATE TABLE contract (
 );
 
 CREATE TABLE coverage (
+CREATE TABLE coverage (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    contract_id INT,
+    coverage VARCHAR(255) NOT NULL,
+    FOREIGN KEY (contract_id) REFERENCES contract(id)
     contract_id INT,
     coverage VARCHAR(255) NOT NULL,
     FOREIGN KEY (contract_id) REFERENCES contract(id)
 );
 
 CREATE TABLE contract_price (
+CREATE TABLE contract_price (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    contract_id INT,
+    vehicle_type ENUM('city_car', 'sedan', 'utility') NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (contract_id) REFERENCES contract(id)
     contract_id INT,
     vehicle_type ENUM('city_car', 'sedan', 'utility') NOT NULL,
     price DECIMAL(10,2) NOT NULL,
@@ -32,13 +43,26 @@ CREATE TABLE contract_price (
 
 -- Data Insertion
 INSERT INTO insurance (name) VALUES ('AssurAuto+'), ('SafeDrive'), ('ZenAssur'), ('AutoSecure');
+-- Data Insertion
+INSERT INTO insurance (name) VALUES ('AssurAuto+'), ('SafeDrive'), ('ZenAssur'), ('AutoSecure');
 
+INSERT INTO contract (insurance_id, name) VALUES 
 INSERT INTO contract (insurance_id, name) VALUES 
 (1, 'Eco'), (1, 'PlusPlus'), 
 (2, 'Eco'), (2, 'PlusPlus'), 
 (3, 'Eco'), (3, 'PlusPlus'), 
 (4, 'Eco'), (4, 'PlusPlus');
 
+-- Coverages for each contract
+INSERT INTO coverage (contract_id, coverage) VALUES 
+(1, 'Civil liability'), (1, 'Minimal assistance'), 
+(2, 'All risks'), (2, '24/7 assistance'), (2, 'Replacement vehicle'), 
+(3, 'Civil liability'), (3, 'Glass breakage'), 
+(4, 'All risks'), (4, 'Theft/fire'), (4, 'Reduced deductible'), 
+(5, 'Civil liability'), (5, 'Driver protection'), 
+(6, 'All risks'), (6, 'Mechanical failure'), (6, 'Legal protection'), 
+(7, 'Civil liability'), (7, '50km towing'), 
+(8, 'All risks'), (8, 'Accessory coverage'), (8, '0km towing');
 -- Coverages for each contract
 INSERT INTO coverage (contract_id, coverage) VALUES 
 (1, 'Civil liability'), (1, 'Minimal assistance'), 
