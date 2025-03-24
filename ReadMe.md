@@ -27,3 +27,10 @@ Développé en équipe, ce projet vise à renforcer nos compétences en **PHP**,
 - **Base de données** : MySQL
 - **Outils** : Git/GitHub, Composer, VS Code
 - **Méthodologie** : Développement collaboratif et bonnes pratiques de code
+
+## 💡 Prochaines Améliorations
+
+🔜 Intégration d’une API pour récupérer des offres en temps réel
+🔜 Ajout d’un système de notation et avis des utilisateurs
+
+## 📩 Contact : Si vous souhaitez contribuer ou avez des suggestions, n’hésitez pas à nous contacter !
