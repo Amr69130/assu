@@ -1,65 +1,62 @@
-DROP DATABASE assu;
-CREATE DATABASE assu;
+DROP DATABASE insurance;
+CREATE DATABASE insurance;
 
-USE assu;
+USE insurance;
 
-
-CREATE TABLE assurance (
+CREATE TABLE insurance (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE contrat (
+CREATE TABLE contract (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    assurance_id INT,
-    nom VARCHAR(255) NOT NULL,
-    FOREIGN KEY (assurance_id) REFERENCES assurance(id)
+    insurance_id INT,
+    name VARCHAR(255) NOT NULL,
+    FOREIGN KEY (insurance_id) REFERENCES insurance_(id)
 );
 
-CREATE TABLE garantie (
+CREATE TABLE coverage (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    contrat_id INT,
-    garantie VARCHAR(255) NOT NULL,
-    FOREIGN KEY (contrat_id) REFERENCES contrat(id)
+    contract_id INT,
+    coverage VARCHAR(255) NOT NULL,
+    FOREIGN KEY (contract_id) REFERENCES contract(id)
 );
 
-CREATE TABLE prix_contrat (
+CREATE TABLE contract_price (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    contrat_id INT,
-    type_vehicule ENUM('citadine', 'berline', 'utilitaire') NOT NULL,
-    prix DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (contrat_id) REFERENCES contrat(id)
+    contract_id INT,
+    vehicle_type ENUM('city_car', 'sedan', 'utility') NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (contract_id) REFERENCES contract(id)
 );
 
--- Insertion des données
-INSERT INTO assurance (nom) VALUES ('AssurAuto+'), ('SafeDrive'), ('ZenAssur'), ('AutoSécure');
+-- Data Insertion
+INSERT INTO insurance (name) VALUES ('AssurAuto+'), ('SafeDrive'), ('ZenAssur'), ('AutoSecure');
 
-INSERT INTO contrat (assurance_id, nom) VALUES 
+INSERT INTO contract (insurance_id, name) VALUES 
 (1, 'Eco'), (1, 'PlusPlus'), 
 (2, 'Eco'), (2, 'PlusPlus'), 
 (3, 'Eco'), (3, 'PlusPlus'), 
 (4, 'Eco'), (4, 'PlusPlus');
 
--- Garanties pour chaque contrat
-INSERT INTO garantie (contrat_id, garantie) VALUES 
-(1, 'Responsabilité civile'), (1, 'Assistance minimale'), 
-(2, 'Tous risques'), (2, 'Assistance 24/7'), (2, 'Véhicule de remplacement'), 
-(3, 'Responsabilité civile'), (3, 'Bris de glace'), 
-(4, 'Tous risques'), (4, 'Vol/incendie'), (4, 'Franchise réduite'), 
-(5, 'Responsabilité civile'), (5, 'Protection du conducteur'), 
-(6, 'Tous risques'), (6, 'Panne mécanique'), (6, 'Protection juridique'), 
-(7, 'Responsabilité civile'), (7, 'Dépannage 50km'), 
-(8, 'Tous risques'), (8, 'Garantie accessoires'), (8, '0km dépannage');
+-- Coverages for each contract
+INSERT INTO coverage (contract_id, coverage) VALUES 
+(1, 'Civil liability'), (1, 'Minimal assistance'), 
+(2, 'All risks'), (2, '24/7 assistance'), (2, 'Replacement vehicle'), 
+(3, 'Civil liability'), (3, 'Glass breakage'), 
+(4, 'All risks'), (4, 'Theft/fire'), (4, 'Reduced deductible'), 
+(5, 'Civil liability'), (5, 'Driver protection'), 
+(6, 'All risks'), (6, 'Mechanical failure'), (6, 'Legal protection'), 
+(7, 'Civil liability'), (7, '50km towing'), 
+(8, 'All risks'), (8, 'Accessory coverage'), (8, '0km towing');
 
--- Prix moyens
-INSERT INTO prix_contrat (contrat_id, type_vehicule, prix) VALUES 
-(1, 'citadine', 25), (1, 'berline', 35), (1, 'utilitaire', 40),
-(2, 'citadine', 45), (2, 'berline', 60), (2, 'utilitaire', 70),
-(3, 'citadine', 22), (3, 'berline', 30), (3, 'utilitaire', 38),
-(4, 'citadine', 50), (4, 'berline', 65), (4, 'utilitaire', 75),
-(5, 'citadine', 20), (5, 'berline', 28), (5, 'utilitaire', 36),
-(6, 'citadine', 47), (6, 'berline', 63), (6, 'utilitaire', 72),
-(7, 'citadine', 23), (7, 'berline', 32), (7, 'utilitaire', 39),
-(8, 'citadine', 48), (8, 'berline', 67), (8, 'utilitaire', 78);
-
-
+-- Average prices
+INSERT INTO contract_price (contract_id, vehicle_type, price) VALUES 
+(1, 'city_car', 25), (1, 'sedan', 35), (1, 'utility', 40),
+(2, 'city_car', 45), (2, 'sedan', 60), (2, 'utility', 70),
+(3, 'city_car', 22), (3, 'sedan', 30), (3, 'utility', 38),
+(4, 'city_car', 50), (4, 'sedan', 65), (4, 'utility', 75),
+(5, 'city_car', 20), (5, 'sedan', 28), (5, 'utility', 36),
+(6, 'city_car', 47), (6, 'sedan', 63), (6, 'utility', 72),
+(7, 'city_car', 23), (7, 'sedan', 32), (7, 'utility', 39),
+(8, 'city_car', 48), (8, 'sedan', 67), (8, 'utility', 78);

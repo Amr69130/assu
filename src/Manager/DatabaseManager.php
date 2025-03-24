@@ -24,7 +24,7 @@ class DatabaseManager
     {
         //
         $host = 'localhost';
-        $dbName = 'assu';
+        $dbName = 'insurance';
         $user = 'root';
         $password = '';
 
