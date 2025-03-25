@@ -1,7 +1,5 @@
 <?php
+
 namespace App\Manager;
 
-class CoverageManager extends DatabaseManager
-{
-
-}
+class CoverageManager extends DatabaseManager {}
