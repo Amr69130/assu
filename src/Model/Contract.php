@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model;
 
 class Contract
@@ -8,12 +9,12 @@ class Contract
     public function __construct(
         private ?int $id,
         private string $name,
-        private Insurance $insurance
+        private Insurance $insurance,
+        // private array $prices ( a voir de comment manipuler les relation entre mini table to one POO PDO)
     ) {
         $this->id = $id;
         $this->name = $name;
         $this->insurance = $insurance;
-
     }
 
     /**
