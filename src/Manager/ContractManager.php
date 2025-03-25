@@ -21,6 +21,7 @@ class ContractManager extends DatabaseManager
     //select
     public function getContracts()
     {
+        //  inner join id et price requette 
         $sql = "SELECT * FROM contract";
         $query = self::getConnexion()->prepare($sql);
         $query->execute();
