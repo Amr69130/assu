@@ -1,5 +1,8 @@
 <?php
+
 namespace App\Manager;
+
+use App\Model\Contract;
 
 class ContractManager extends DatabaseManager
 {
@@ -8,17 +11,19 @@ class ContractManager extends DatabaseManager
     public function createContract($name, $insuranceId)
     {
         $sql = "INSERT INTO contract (name, insurance_id) VALUES (:name, :insurance_id)";
-        $query = $this->db->prepare($sql);
+        $query = self::getConnexion()->prepare($sql);
         $query->execute([
             'name' => $name,
             'insurance_id' => $insuranceId
         ]);
     }
+
     //select
     public function getContracts()
     {
+        //  inner join id et price requette 
         $sql = "SELECT * FROM contract";
-        $query = $this->db->prepare($sql);
+        $query = self::getConnexion()->prepare($sql);
         $query->execute();
         $r = $query->fetchAll();
         ///new cONTRACT
