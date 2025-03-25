@@ -8,6 +8,8 @@ use App\Model\Insurance;
 class InsuranceManager extends DatabaseManager
 {
 
+
+
     //  selectionne de tous les assurances avec les contrats 
     public function getAllInsurances(): array
     {

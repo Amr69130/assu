@@ -15,12 +15,7 @@ CREATE TABLE contract (
     FOREIGN KEY (insurance_id) REFERENCES insurance_(id)
 );
 
-CREATE TABLE coverage (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    contract_id INT,
-    coverage VARCHAR(255) NOT NULL,
-    FOREIGN KEY (contract_id) REFERENCES contract(id)
-);
+
 
 CREATE TABLE contract_price (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -39,16 +34,8 @@ INSERT INTO contract (insurance_id, name) VALUES
 (3, 'Eco'), (3, 'PlusPlus'), 
 (4, 'Eco'), (4, 'PlusPlus');
 
--- Coverages for each contract
-INSERT INTO coverage (contract_id, coverage) VALUES 
-(1, 'Civil liability'), (1, 'Minimal assistance'), 
-(2, 'All risks'), (2, '24/7 assistance'), (2, 'Replacement vehicle'), 
-(3, 'Civil liability'), (3, 'Glass breakage'), 
-(4, 'All risks'), (4, 'Theft/fire'), (4, 'Reduced deductible'), 
-(5, 'Civil liability'), (5, 'Driver protection'), 
-(6, 'All risks'), (6, 'Mechanical failure'), (6, 'Legal protection'), 
-(7, 'Civil liability'), (7, '50km towing'), 
-(8, 'All risks'), (8, 'Accessory coverage'), (8, '0km towing');
+
+
 
 -- Average prices
 INSERT INTO contract_price (contract_id, vehicle_type, price) VALUES 
