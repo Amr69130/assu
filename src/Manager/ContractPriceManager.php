@@ -1,5 +1,10 @@
 <?php
+
 namespace App\Manager;
+
+use App\Model\Contract;
+use App\Model\ContractPrice;
+use App\Model\Insurance;
 
 class ContractPriceManager extends DatabaseManager
 {
@@ -16,14 +21,36 @@ class ContractPriceManager extends DatabaseManager
     //select
     public function getContractPrices()
     {
-        $sql = "SELECT * FROM contract_price";
+        $sql = "
+            SELECT 
+                cp.id AS contract_price_id, 
+                cp.price, 
+                cp.vehicle_type,
+                c.id AS contract_id, 
+                c.name AS contract_name, 
+                i.id AS insurance_id, 
+                i.name AS insurance_name
+            FROM contract_price cp
+            JOIN contract c ON cp.contract_id = c.id
+            JOIN insurance i ON c.insurance_id = i.id
+        ";
+
+
+        // il join add contract et insurance 
         $query = self::getConnexion()->prepare($sql);
         $query->execute();
         $r = $query->fetchAll();
-        ///new cONTRACT
+        ///new CONTRACT
         $contractPrices = [];
         foreach ($r as $contractPrice) {
-            $contractPrices[] = new ContractPrice($contractPrice['id'], $contractPrice['price'], $contractPrice['contract_id']);
+            $insurance = new Insurance($contractPrice["insurance_id"], $contractPrice["insurance_name"]);
+            $contract = new Contract($contractPrice['contract_id'], $contractPrice['contract_name'], $insurance);
+            $contractPrices[] = new ContractPrice(
+                $contractPrice['contract_price_id'],
+                $contractPrice['price'],
+                $contractPrice['vehicle_type'], // Now correctly passed
+                $contract
+            );
         }
         return $contractPrices;
     }

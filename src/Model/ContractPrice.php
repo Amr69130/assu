@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model;
 
 class ContractPrice
@@ -28,7 +29,6 @@ class ContractPrice
     public function setPrice(float $price): void
     {
         $this->price = $price;
-
     }
     public function getVehicleType(): string
     {
@@ -37,7 +37,6 @@ class ContractPrice
     public function setVehicleType(string $vehicleType): void
     {
         $this->vehicleType = $vehicleType;
-
     }
 
 

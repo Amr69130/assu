@@ -28,6 +28,7 @@ class ContractManager extends DatabaseManager
         $r = $query->fetchAll();
         ///new cONTRACT
         $contracts = [];
+        //Créer les contractPrice
         foreach ($r as $contract) {
             $contracts[] = new Contract($contract['id'], $contract['name'], $contract['insurance_id']);
         }
