@@ -5,7 +5,7 @@ use App\Manager\InsuranceManager;
 
 $title = "Bienvenue dans le comparateur des assurances";
 
-require_once("templates/header.php");
+require_once("views/bloc/header.php");
 
 $insuranceManager = new InsuranceManager();
 
@@ -16,5 +16,5 @@ var_dump($insuranceManager->getInsuranceById(1));
 
 
 <?php
-require_once("templates/footer.php");
+require_once("views/bloc/footer.php");
 ?>
