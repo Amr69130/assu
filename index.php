@@ -1,20 +1,27 @@
 <?php
 require_once(__DIR__ . "/vendor/autoload.php");
 
-use App\Manager\InsuranceManager;
+use App\Controller\HomeController;
 
-$title = "Bienvenue dans le comparateur des assurances";
+var_dump($_SERVER["REQUEST_URI"]);
 
-require_once("views/bloc/header.php");
+$action = $_GET["action"] ?? 'homePage';
 
-$insuranceManager = new InsuranceManager();
+var_dump("Action",$action);
 
-var_dump($insuranceManager->getInsuranceById(1));
-
-?>
-<h1 class="text-center">Listes des Assurances</h1>
-
-
-<?php
-require_once("views/bloc/footer.php");
-?>
+//Créer une route pour la page d'accueil
+//afficher toutes les assurances
+//  index.php?action=homePage
+if($action == "homePage"){
+    $homeController = new HomeController();
+    $homeController->homePage();
+}
+// Créer une route...
+//  index.php?action=page23
+// elseif($action == "page23"){
+//     $homeController = new HomeController();
+//     $homeController->homePage();
+// }
+else{
+    echo("Page INCONNUE");
+}

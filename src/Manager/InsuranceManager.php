@@ -11,7 +11,7 @@ class InsuranceManager extends DatabaseManager
 
 
     //  selectionne de tous les assurances avec les contrats 
-    public function getAllInsurances(): array
+    public function selectAll(): array
     {
         // Connexion a la bdd et sélectionner tous les assurances
         $requete = self::getConnexion()->prepare(
@@ -70,7 +70,7 @@ class InsuranceManager extends DatabaseManager
         return $arrayInsurance;
     }
     // add insurance
-    public function addInsurance(string $name): bool
+    public function insert(string $name): bool
     {
         $requete = self::getConnexion()->prepare("INSERT INTO insurance (name) VALUES(:name);");
         $requete->execute([
@@ -80,7 +80,7 @@ class InsuranceManager extends DatabaseManager
     }
 
     // update insurance
-    public function updateInsurance(int $id, string $name): bool
+    public function update(int $id, string $name): bool
     {
         $requete = self::getConnexion()->prepare("UPDATE insurance SET name = :name WHERE id = :id;");
         return $requete->execute(['id' => $id, 'name' => $name]);

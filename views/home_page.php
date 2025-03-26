@@ -1,0 +1,1 @@
+<h1>Voici la liste de toutes les assurances</h1>
