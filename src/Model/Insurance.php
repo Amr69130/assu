@@ -7,7 +7,8 @@ class Insurance
 
     public function __construct(
         private ?int $id,
-        private string $name
+        private string $name,
+        private array $contracts = [],
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -17,7 +18,7 @@ class Insurance
     /**
      * Get the value of id
      */
-    public function getId()
+    public function getId():?int
     {
         return $this->id;
     }
@@ -25,7 +26,7 @@ class Insurance
     /**
      * Get the value of name
      */
-    public function getName()
+    public function getName():string
     {
         return $this->name;
     }
@@ -40,5 +41,14 @@ class Insurance
         $this->name = $name;
 
         return $this;
+    }
+
+    public function getContracts(): array
+    {
+        return $this->contracts;
+    }
+
+    public function addContract(Contract $contract) {
+        $this->contracts[] = $contract;
     }
 }

@@ -4,14 +4,15 @@ namespace App\Model;
 
 class Contract
 {
-
+private array $prices = [];
 
     public function __construct(
-        private ?int $id,
-        private string $name,
-        private Insurance $insurance,
-        // private array $prices ( a voir de comment manipuler les relation entre mini table to one POO PDO)
-    ) {
+       private ?int $id,
+       private string $name,
+       private Insurance $insurance,
+
+    )
+{
         $this->id = $id;
         $this->name = $name;
         $this->insurance = $insurance;
@@ -20,7 +21,7 @@ class Contract
     /**
      * Get the value of id
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -28,7 +29,7 @@ class Contract
     /**
      * Get the value of name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -44,4 +45,22 @@ class Contract
 
         return $this;
     }
+
+    public function getInsurance(): Insurance
+    {
+        return $this->insurance;
+    }
+
+    // Méthode pour ajouter un prix à ce contrat
+    public function addPrice(ContractPrice $price): void {
+        $this->prices[] = $price;
+    }
+
+    // Méthode pour obtenir tous les prix associés à ce contrat
+    public function getPrices(): array {
+        return $this->prices;
+    }
 }
+
+
+

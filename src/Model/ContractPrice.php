@@ -60,3 +60,4 @@ class ContractPrice
         return $this;
     }
 }
+
