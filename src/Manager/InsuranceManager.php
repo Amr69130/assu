@@ -12,7 +12,7 @@ class InsuranceManager extends DatabaseManager
 
 
 
-    //  selectionne de tous les assurances avec les contrats 
+    //  selectionne de tous les assurances avec les contrats
     public function selectAll(): array
     {
         // Connexion a la bdd et sélectionner tous les assurances
@@ -86,7 +86,7 @@ class InsuranceManager extends DatabaseManager
                 );
             }
             if ($row['vehicle_type'] !== null) {
-                $contracts[$contractId]->addPrice(
+                $contracts[$contractId]->addPrice(null,
                     new ContractPrice($row['vehicle_type'], $row['price'])
                 );
             }
