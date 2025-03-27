@@ -48,7 +48,7 @@ class ContractPriceManager extends DatabaseManager
             $contractPrices[] = new ContractPrice(
                 $contractPrice['contract_price_id'],
                 $contractPrice['price'],
-                $contractPrice['vehicle_type'], // Now correctly passed
+                $contractPrice['vehicle_type'],
                 $contract
             );
         }
