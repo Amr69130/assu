@@ -9,9 +9,6 @@ use App\Model\Contract;
 
 class InsuranceManager extends DatabaseManager
 {
-
-
-
     //  selectionne de tous les assurances avec les contrats
     public function selectAll(): array
     {
@@ -26,8 +23,12 @@ class InsuranceManager extends DatabaseManager
                     insurance i 
                         LEFT JOIN contract c ON i.id = c.insurance_id
                         -- left join contract price and the insurance   
+                            GROUP BY
+                            i.id
                             ORDER BY 
-                            i.id, c.id;"
+                            i.id, c.id
+                            ;"
+
         );
         $requete->execute();
         $arrayInsurances = $requete->fetchAll();
@@ -45,107 +46,49 @@ class InsuranceManager extends DatabaseManager
     public function selectByID(int $id): Insurance|false
     {
         $requete = self::getConnexion()->prepare(
-            "SELECT 
-            i.id AS insurance_id, 
-            i.name AS insurance_name, 
-            c.id AS contract_id, 
-            c.name AS contract_name,
-            cp.vehicle_type,
-            cp.price
-        FROM 
-            insurance i
-        LEFT JOIN 
-            contract c ON i.id = c.insurance_id
-        LEFT JOIN 
-            contract_price cp ON c.id = cp.contract_id
-        WHERE 
-            i.id = :id"
+            "SELECT
+               i.id,
+               i.name,
+               c.id AS contract_id,
+               c.name AS contract_name,
+               cp.vehicle_type,
+               cp.price
+           FROM
+               insurance i
+           INNER JOIN
+               contract c ON i.id = c.insurance_id
+           LEFT JOIN
+               contract_price cp ON c.id = cp.contract_id
+           WHERE
+               i.id = :id"
         );
 
         $requete->execute(['id' => $id]);
-        $results = $requete->fetchAll();
+        $arrayInsurances = $requete->fetchAll(); // On récupère toutes les lignes correspondantes
 
-        if (!$results) {
-            return false;
+        if (empty($arrayInsurances)) {
+            return false; // Aucun résultat trouvé
         }
 
-        // Récupérer les informations de l'assurance
-        $insuranceId = $results[0]['insurance_id'];
-        $insuranceName = $results[0]['insurance_name'];
-        $insurance = new Insurance($insuranceId, $insuranceName, []);
-        // Créer un tableau pour stocker les contrats
+        // Initialisation des tableaux pour stocker les contrats
         $contracts = [];
 
-        foreach ($results as $row) {
-            $contractId = $row['contract_id'];
-            if (!isset($contracts[$contractId])) {
-                $contracts[$contractId] = new Contract(
-                    $contractId,
-                    $row['contract_name'],
-                    $insurance
-                );
-            }
-            if ($row['vehicle_type'] !== null) {
-                $contracts[$contractId]->addPrice(null,
-                    new ContractPrice($row['vehicle_type'], $row['price'])
-                );
-            }
+        foreach ($arrayInsurances as $arrayInsurance) {
+            $contracts[] = [
+                'contract_id' => $arrayInsurance["contract_id"],
+                'contract_name' => $arrayInsurance["contract_name"],
+                'vehicle_type' => $arrayInsurance["vehicle_type"],
+                'price' => $arrayInsurance["price"]
+            ];
         }
 
-        return new Insurance($insuranceId, $insuranceName, array_values($contracts));
+        // Création de l'objet Insurance
+        return new Insurance(
+            $arrayInsurance["id"],  // ID de l'assurance
+            $arrayInsurance["name"], // Nom de l'assurance
+            $contracts  // Tableau des contrats associés
+        );
     }
-
-
-
-
-
-
-//    public function selectByID(int $id): Insurance|false
-//    {
-//        $requete = self::getConnexion()->prepare(
-//            "SELECT
-//            i.id,
-//            i.name,
-//            c.id AS contract_id,
-//            c.name AS contract_name,
-//            cp.vehicle_type,
-//            cp.price
-//        FROM
-//            insurance i
-//        INNER JOIN
-//            contract c ON i.id = c.insurance_id
-//        LEFT JOIN
-//            contract_price cp ON c.id = cp.contract_id
-//        WHERE
-//            i.id = :id"
-//        );
-//
-//        $requete->execute(['id' => $id]);
-//        $arrayInsurance = $requete->fetchAll(); // On récupère toutes les lignes correspondantes
-//
-//        if (empty($arrayInsurance)) {
-//            return false; // Aucun résultat trouvé
-//        }
-//
-//        // Initialisation des tableaux pour stocker les contrats
-//        $contracts = [];
-//
-//        foreach ($arrayInsurance as $row) {
-//            $contracts[] = [
-//                'contract_id' => $row["contract_id"],
-//                'contract_name' => $row["contract_name"],
-//                'vehicle_type' => $row["vehicle_type"],
-//                'price' => $row["price"]
-//            ];
-//        }
-//
-//        // Création de l'objet Insurance
-//        return new Insurance(
-//            $arrayInsurance[0]["id"],  // ID de l'assurance
-//            $arrayInsurance[0]["name"], // Nom de l'assurance
-//            $contracts  // Tableau des contrats associés
-//        );
-//    }
 
 
 

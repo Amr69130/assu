@@ -16,22 +16,22 @@ class InsuranceController
 
     public function index()
     {
-        $insurances = $this->insuranceManager->getAllInsurances();
+        $insurances = $this->insuranceManager->selectAll();
         require_once 'views/insurance_list.php';
     }
 
-    // public function create($data)
-    // {
-    //     return $this->insuranceManager->createInsurance($data);
-    // }
+    public function insertInsurance(string $name)
+    {
+        return $this->insuranceManager->insert($name);
+    }
 
-    // public function update($id, $data)
-    // {
-    //     return $this->insuranceManager->updateInsurance($id, $data);
-    // }
+    public function updateInsurance(int $id, string $name)
+    {
+        return $this->insuranceManager->update($id, $name);
+    }
 
-    // public function delete($id)
-    // {
-    //     return $this->insuranceManager->deleteInsurance($id);
-    // }
+    public function delete(int $id)
+    {
+        return $this->insuranceManager->deleteInsurance($id);
+    }
 }
