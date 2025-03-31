@@ -15,7 +15,7 @@ class InsuranceManager extends DatabaseManager
         // Connexion a la bdd et sélectionner tous les assurances
         $requete = self::getConnexion()->prepare(
             "SELECT 
-                i.id , 
+                i.id, 
                 i.name, 
                 c.id AS contract_id, 
                 c.name AS contract_name 
@@ -65,24 +65,20 @@ class InsuranceManager extends DatabaseManager
         $contractManager = new ContractManager();
         $contractPriceManager = new ContractPriceManager();
         // TODO Select contracts by assurance id et adpater la boucle
-        $arrayContracts = "???";
-        // Initialisation des tableaux pour stocker les contrats
-        $contracts = [];
-        foreach ($arrayContracts as $arrayContract) {
-            // TODO Select contractPrices by ContractID id et adpater la boucle
-            $arrayContractPrices = "???";
-            $contractsPrices = [];
-            foreach ($arrayContractPrices as $arrayContractPrice) {
-                $contractsPrices[] = new ContractPrice($arrayContract["id"], $arrayContract["price"], $arrayContract["vehicule_type"],null);
-            }
+        $contracts = $contractManager->getContractsByInsuranceId($id);
 
-            $contracts[] = new Contract(
-                $arrayContract ["id"],
-                $arrayContract["name"],
-                null,
-                $contractsPrices
-            );
-        }
+//        var_dump($contracts);
+
+        // Initialisation des tableaux pour stocker les contrats
+
+        /**
+         * @var Contract $contract
+         */
+            foreach ($contracts as $contract) {
+                // TODO Select contractPrices by ContractID id et adpater la boucle
+                $contractPrices = $contractPriceManager->selectByContractId($contract->getId());
+                $contract->setPrices($contractPrices);
+            }
 
         // Création de l'objet Insurance
         return new Insurance(

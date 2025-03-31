@@ -8,7 +8,7 @@ class ContractManager extends DatabaseManager
 {
 
     //crud
-    public function createContract($name, $insuranceId)
+    public function createContract($name, $insuranceId): array
     {
         $sql = "INSERT INTO contract (name, insurance_id) VALUES (:name, :insurance_id)";
         $query = self::getConnexion()->prepare($sql);
@@ -32,9 +32,24 @@ class ContractManager extends DatabaseManager
         foreach ($r as $contract) {
             $contracts[] = new Contract($contract['id'], $contract['name'], $contract['insurance_id']);
         }
+//        return $contracts;
+    }
+
+    // TODO Select contracts by assurance id
+    public function getContractsByInsuranceId($insuranceId)
+    {
+        $sql = "SELECT * FROM contract WHERE insurance_id = :insurance_id";
+        $query = self::getConnexion()->prepare($sql);
+        $query->execute([
+            'insurance_id' => $insuranceId
+        ]);
+        $r = $query->fetchAll();
+        $contracts = [];
+        foreach ($r as $contract) {
+            $contracts[] = new Contract($contract['id'], $contract['name'], null,[]);
+        }
+
         return $contracts;
     }
 
-
-    // TODO Select contracts by assurance id
 }

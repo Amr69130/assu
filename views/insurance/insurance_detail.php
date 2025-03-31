@@ -8,8 +8,6 @@ $name = $insurance->getName();
 $contracts = $insurance->getContracts();
 ?>
 <h1 class="text-center">DETAILS DE L'ASSU SA MERE</h1>
-    <?=var_dump($insurance);
-   ?>
 
         <div class="col-4 d-flex p-3 justify-content-center">
             <div class="p-2">
@@ -19,6 +17,11 @@ $contracts = $insurance->getContracts();
 
                 <?php foreach ($contracts as $contract): ?>
                     <p>Contrat : <?=($contract->getName()) ?> </p>
+                    <?php foreach ($contract->getPrice() as $contractPrice): ?>
+                        <p><?=($contractPrice->getVehicleType()) ?> </p>
+                        <p><?=($contractPrice->getPrice()) ?> </p>
+
+                    <?php endforeach; ?>
                 <?php endforeach; ?>
 
                 <a class="btn btn-primary" href="index.php">RETOUR ACCUEIL</a>

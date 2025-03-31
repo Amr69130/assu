@@ -57,6 +57,10 @@ class Contract
         $this->prices[] = $price;
     }
 
+    public function setPrices(array $prices): void {
+        $this->prices = $prices;
+    }
+
     // Méthode pour obtenir tous les prix associés à ce contrat
     public function getPrice(): array {
         return $this->prices;

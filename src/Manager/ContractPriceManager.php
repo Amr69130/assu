@@ -57,5 +57,19 @@ class ContractPriceManager extends DatabaseManager
     }
 
     // TODO Select contractPrices by contract id
+    public function selectByContractId(int $contractId): array
+    {
+
+        $sql = "SELECT * FROM insurance.contract_price WHERE contract_id = :contract_id";
+        $query = self::getConnexion()->prepare($sql);
+        $query->execute(['contract_id' => $contractId]);
+        $arrayPrices = $query->fetchAll();
+        $prices = [];
+        foreach ($arrayPrices as $arrayPrice) {
+            $prices[] = new ContractPrice($arrayPrice['id'], $arrayPrice['price'], $arrayPrice['vehicle_type'],null);
+        }
+        return $prices;
+
+    }
 
 }
