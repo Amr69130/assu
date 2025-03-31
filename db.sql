@@ -1,4 +1,3 @@
-DROP DATABASE insurance;
 CREATE DATABASE insurance;
 
 USE insurance;
@@ -12,7 +11,7 @@ CREATE TABLE contract (
     id INT AUTO_INCREMENT PRIMARY KEY,
     insurance_id INT,
     name VARCHAR(255) NOT NULL,
-    FOREIGN KEY (insurance_id) REFERENCES insurance_(id)
+    FOREIGN KEY (insurance_id) REFERENCES insurance(id)
 );
 
 

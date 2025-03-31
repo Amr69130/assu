@@ -3,8 +3,6 @@ namespace App\Model;
 
 class Insurance
 {
-
-
     public function __construct(
         private ?int $id,
         private string $name,
@@ -15,28 +13,17 @@ class Insurance
 
     }
 
-    /**
-     * Get the value of id
-     */
     public function getId():?int
     {
         return $this->id;
     }
 
-    /**
-     * Get the value of name
-     */
     public function getName():string
     {
         return $this->name;
     }
 
-    /**
-     * Set the value of name
-     *
-     * @return  self
-     */
-    public function setName($name)
+    public function setName($name): string
     {
         $this->name = $name;
 
@@ -48,7 +35,7 @@ class Insurance
         return $this->contracts;
     }
 
-    public function addContract(Contract $contract) {
+    public function addContract(Contract $contract): void {
         $this->contracts[] = $contract;
     }
 }

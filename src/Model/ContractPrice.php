@@ -39,20 +39,11 @@ class ContractPrice
         $this->vehicleType = $vehicleType;
     }
 
-
-    /**
-     * Get the value of contract
-     */
     public function getContract(): ?Contract
     {
         return $this->contract;
     }
 
-    /**
-     * Set the value of contract
-     *
-     * @return  self
-     */
     public function setContract(?Contract $contract)
     {
         $this->contract = $contract;

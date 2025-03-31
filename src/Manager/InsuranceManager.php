@@ -1,18 +1,15 @@
 <?php
 
 namespace App\Manager;
-
-use PDO;
 use App\Model\Insurance;
-use App\Model\ContractPrice;
 use App\Model\Contract;
 
 class InsuranceManager extends DatabaseManager
 {
-    //  selectionne de tous les assurances avec les contrats
+    //  select all insurances and all contracts
     public function selectAll(): array
     {
-        // Connexion a la bdd et sélectionner tous les assurances
+        // Connexion à la bdd et sélectionner toutes les assurances
         $requete = self::getConnexion()->prepare(
             "SELECT 
                 i.id, 
@@ -32,18 +29,17 @@ class InsuranceManager extends DatabaseManager
         );
         $requete->execute();
         $arrayInsurances = $requete->fetchAll();
-        // creer des objets
-
+        // crée des objets
         $insurances = [];
         foreach ($arrayInsurances as $arrayInsurance) {
-            //Istantiation d'un objet Car avec les données du tableau associatif
+            //instancier un objet insurance avec les données du tableau associatif
             $insurances[] = new Insurance($arrayInsurance["id"], $arrayInsurance["name"]);
         }
-
         return $insurances;
     }
 
-    public function selectByID(int $id): Insurance|false
+    //  Select insurance by id
+    public function selectById(int $id): Insurance|false
     {
         $requete = self::getConnexion()->prepare(
             "SELECT
@@ -54,7 +50,6 @@ class InsuranceManager extends DatabaseManager
            WHERE
                i.id = :id"
         );
-
         $requete->execute(['id' => $id]);
         $arrayInsurance = $requete->fetch(); // On récupère toutes les lignes correspondantes
 
@@ -64,7 +59,7 @@ class InsuranceManager extends DatabaseManager
 
         $contractManager = new ContractManager();
         $contractPriceManager = new ContractPriceManager();
-        // TODO Select contracts by assurance id et adpater la boucle
+         // Select contracts by assurance id
         $contracts = $contractManager->getContractsByInsuranceId($id);
 
 //        var_dump($contracts);
@@ -75,7 +70,7 @@ class InsuranceManager extends DatabaseManager
          * @var Contract $contract
          */
             foreach ($contracts as $contract) {
-                // TODO Select contractPrices by ContractID id et adpater la boucle
+                // Select contractPrices by ContractID id
                 $contractPrices = $contractPriceManager->selectByContractId($contract->getId());
                 $contract->setPrices($contractPrices);
             }
@@ -88,13 +83,7 @@ class InsuranceManager extends DatabaseManager
         );
     }
 
-
-
-
-
-
-
-    // add insurance
+    // Add insurance
     public function insert(string $name): bool
     {
         $requete = self::getConnexion()->prepare("INSERT INTO insurance (name) VALUES(:name);");
@@ -104,14 +93,14 @@ class InsuranceManager extends DatabaseManager
         return $requete->rowCount() > 0;
     }
 
-    // update insurance
+    // Update insurance
     public function update(int $id, string $name): bool
     {
         $requete = self::getConnexion()->prepare("UPDATE insurance SET name = :name WHERE id = :id;");
         return $requete->execute(['id' => $id, 'name' => $name]);
     }
 
-    //  delete insurance
+    //  Delete insurance
     public function deleteInsurance(int $id): bool
     {
         $requete = self::getConnexion()->prepare("DELETE FROM insurance WHERE id = :id;");

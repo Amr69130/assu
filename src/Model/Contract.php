@@ -4,8 +4,6 @@ namespace App\Model;
 
 class Contract
 {
-
-
     public function __construct(
        private ?int $id,
        private string $name,
@@ -19,27 +17,16 @@ class Contract
         $this->prices = $prices;
     }
 
-    /**
-     * Get the value of id
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Get the value of name
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set the value of name
-     *
-     * @return  self
-     */
     public function setName($name)
     {
         $this->name = $name;

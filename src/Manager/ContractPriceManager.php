@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Manager;
-
 use App\Model\Contract;
 use App\Model\ContractPrice;
 use App\Model\Insurance;
 
 class ContractPriceManager extends DatabaseManager
 {
-    //crud
-    public function createContractPrice($price, $contractId)
+
+    // Create a contract price
+    public function createContractPrice($price, $contractId): void
     {
         $sql = "INSERT INTO contract_price (price, contract_id) VALUES (:price, :contract_id)";
         $query = self::getConnexion()->prepare($sql);
@@ -18,8 +18,9 @@ class ContractPriceManager extends DatabaseManager
             'contract_id' => $contractId
         ]);
     }
-    //select
-    public function getContractPrices()
+
+    //select contract price
+    public function getContractPrices(): array
     {
         $sql = "
             SELECT 
@@ -28,7 +29,7 @@ class ContractPriceManager extends DatabaseManager
                 cp.vehicle_type,
                 c.id AS contract_id, 
                 c.name AS contract_name, 
-                c.vehicle_type AS vehicle_type,
+                
                 i.id AS insurance_id, 
                 i.name AS insurance_name
             FROM contract_price cp
@@ -36,16 +37,14 @@ class ContractPriceManager extends DatabaseManager
             JOIN insurance i ON c.insurance_id = i.id
         ";
 
-
-        // il join add contract et insurance 
         $query = self::getConnexion()->prepare($sql);
         $query->execute();
         $r = $query->fetchAll();
-        ///new CONTRACT
+
         $contractPrices = [];
         foreach ($r as $contractPrice) {
             $insurance = new Insurance($contractPrice["insurance_id"], $contractPrice["insurance_name"]);
-            $contract = new Contract($contractPrice['contract_id'], $contractPrice['contract_name'], $insurance);
+            $contract = new Contract($contractPrice['contract_id'], $contractPrice['contract_name'], $insurance, []);
             $contractPrices[] = new ContractPrice(
                 $contractPrice['contract_price_id'],
                 $contractPrice['price'],
@@ -56,7 +55,7 @@ class ContractPriceManager extends DatabaseManager
         return $contractPrices;
     }
 
-    // TODO Select contractPrices by contract id
+    // Select contractPrices by contract id
     public function selectByContractId(int $contractId): array
     {
 
@@ -69,7 +68,5 @@ class ContractPriceManager extends DatabaseManager
             $prices[] = new ContractPrice($arrayPrice['id'], $arrayPrice['price'], $arrayPrice['vehicle_type'],null);
         }
         return $prices;
-
     }
-
 }
