@@ -7,30 +7,42 @@ require_once __DIR__ . '/../../views/block/header.php';
 $name = $insurance->getName();
 $contracts = $insurance->getContracts();
 ?>
-<h1 class="text-center">DETAILS DE L'ASSU SA MERE</h1>
 
-        <div class="col-4 d-flex p-3 justify-content-center">
-            <div class="p-2">
+<div class="container mt-5">
+    <h1 class="text-center text-primary">Détails de l'Assurance - <?= htmlspecialchars($name) ?></h1>
 
-                <p></p>
-                <h2><?php echo $name ?></h2>
-
-                <?php foreach ($contracts as $contract): ?>
-                    <p>Contrat : <?=($contract->getName()) ?> </p>
-                    <?php foreach ($contract->getPrice() as $contractPrice): ?>
-                        <p><?=($contractPrice->getVehicleType()) ?> </p>
-                        <p><?=($contractPrice->getPrice()) ?> </p>
-
-                    <?php endforeach; ?>
-                <?php endforeach; ?>
-
-                <a class="btn btn-primary" href="index.php">RETOUR ACCUEIL</a>
-
-
-
-
-
+    <div class="row justify-content-center">
+        <?php foreach ($contracts as $contract): ?>
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-lg mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-center text-uppercase fw-bold"><?= htmlspecialchars($contract->getName()) ?></h5>
+                        <hr>
+                        <h6 class="text-muted">Tarifs :</h6>
+                        <table class="table table-bordered">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>Type de véhicule</th>
+                                <th>Prix (€)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($contract->getPrice() as $contractPrice): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($contractPrice->getVehicleType()) ?></td>
+                                    <td><?= htmlspecialchars($contractPrice->getPrice()) ?> €</td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-<?php
-require_once __DIR__ . '/../../views/block/footer.php';
+        <?php endforeach; ?>
+                        <div class="text-center">
+                            <a href="index.php" class="btn btn-primary mt-2">Retour à l'accueil</a>
+                        </div>
+    </div>
+</div>
+
+<?php require_once __DIR__ . '/../../views/block/footer.php'; ?>

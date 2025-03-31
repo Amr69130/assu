@@ -29,9 +29,9 @@ CREATE TABLE contract_price (
 INSERT INTO insurance (name) VALUES ('AssurAuto+'), ('SafeDrive'), ('ZenAssur'), ('AutoSecure');
 
 INSERT INTO contract (insurance_id, name) VALUES 
-(1, 'Eco'), (1, 'PlusPlus'), 
-(2, 'Eco'), (2, 'PlusPlus'), 
-(3, 'Eco'), (3, 'PlusPlus'), 
+(1, 'Eco'), (1, 'PlusPlus'),
+(2, 'Eco'), (2, 'PlusPlus'),
+(3, 'Eco'), (3, 'PlusPlus'),
 (4, 'Eco'), (4, 'PlusPlus');
 
 
