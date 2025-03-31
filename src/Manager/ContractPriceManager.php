@@ -28,6 +28,7 @@ class ContractPriceManager extends DatabaseManager
                 cp.vehicle_type,
                 c.id AS contract_id, 
                 c.name AS contract_name, 
+                c.vehicle_type AS vehicle_type,
                 i.id AS insurance_id, 
                 i.name AS insurance_name
             FROM contract_price cp
@@ -54,4 +55,7 @@ class ContractPriceManager extends DatabaseManager
         }
         return $contractPrices;
     }
+
+    // TODO Select contractPrices by contract id
+
 }

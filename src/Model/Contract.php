@@ -4,18 +4,19 @@ namespace App\Model;
 
 class Contract
 {
-private array $prices = [];
+
 
     public function __construct(
        private ?int $id,
        private string $name,
-       private Insurance $insurance,
-
+       private ?Insurance $insurance,
+       private array $prices,
     )
 {
         $this->id = $id;
         $this->name = $name;
         $this->insurance = $insurance;
+        $this->prices = $prices;
     }
 
     /**
@@ -46,7 +47,7 @@ private array $prices = [];
         return $this;
     }
 
-    public function getInsurance(): Insurance
+    public function getInsurance(): ?Insurance
     {
         return $this->insurance;
     }
@@ -57,8 +58,13 @@ private array $prices = [];
     }
 
     // Méthode pour obtenir tous les prix associés à ce contrat
-    public function getPrices(): array {
+    public function getPrice(): array {
         return $this->prices;
+    }
+
+    public function setInsurance(?Insurance $insurance): void
+    {
+        $this->insurance = $insurance;
     }
 }
 

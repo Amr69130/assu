@@ -9,7 +9,7 @@ class ContractPrice
         private ?int $id,
         private float $price,
         private string $vehicleType,
-        private Contract $contract
+        private ?Contract $contract
     ) {
         $this->id = $id;
         $this->price = $price;
@@ -43,7 +43,7 @@ class ContractPrice
     /**
      * Get the value of contract
      */
-    public function getContract(): Contract
+    public function getContract(): ?Contract
     {
         return $this->contract;
     }
@@ -53,7 +53,7 @@ class ContractPrice
      *
      * @return  self
      */
-    public function setContract(Contract $contract)
+    public function setContract(?Contract $contract)
     {
         $this->contract = $contract;
 

@@ -48,38 +48,40 @@ class InsuranceManager extends DatabaseManager
         $requete = self::getConnexion()->prepare(
             "SELECT
                i.id,
-               i.name,
-               c.id AS contract_id,
-               c.name AS contract_name,
-               cp.vehicle_type,
-               cp.price
+               i.name
            FROM
                insurance i
-           INNER JOIN
-               contract c ON i.id = c.insurance_id
-           LEFT JOIN
-               contract_price cp ON c.id = cp.contract_id
            WHERE
                i.id = :id"
         );
 
         $requete->execute(['id' => $id]);
-        $arrayInsurances = $requete->fetchAll(); // On récupère toutes les lignes correspondantes
+        $arrayInsurance = $requete->fetch(); // On récupère toutes les lignes correspondantes
 
-        if (empty($arrayInsurances)) {
+        if ($arrayInsurance === false) {
             return false; // Aucun résultat trouvé
         }
 
+        $contractManager = new ContractManager();
+        $contractPriceManager = new ContractPriceManager();
+        // TODO Select contracts by assurance id et adpater la boucle
+        $arrayContracts = "???";
         // Initialisation des tableaux pour stocker les contrats
         $contracts = [];
+        foreach ($arrayContracts as $arrayContract) {
+            // TODO Select contractPrices by ContractID id et adpater la boucle
+            $arrayContractPrices = "???";
+            $contractsPrices = [];
+            foreach ($arrayContractPrices as $arrayContractPrice) {
+                $contractsPrices[] = new ContractPrice($arrayContract["id"], $arrayContract["price"], $arrayContract["vehicule_type"],null);
+            }
 
-        foreach ($arrayInsurances as $arrayInsurance) {
-            $contracts[] = [
-                'contract_id' => $arrayInsurance["contract_id"],
-                'contract_name' => $arrayInsurance["contract_name"],
-                'vehicle_type' => $arrayInsurance["vehicle_type"],
-                'price' => $arrayInsurance["price"]
-            ];
+            $contracts[] = new Contract(
+                $arrayContract ["id"],
+                $arrayContract["name"],
+                null,
+                $contractsPrices
+            );
         }
 
         // Création de l'objet Insurance

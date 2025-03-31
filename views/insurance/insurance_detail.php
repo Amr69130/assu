@@ -8,6 +8,9 @@ $name = $insurance->getName();
 $contracts = $insurance->getContracts();
 ?>
 <h1 class="text-center">DETAILS DE L'ASSU SA MERE</h1>
+    <?=var_dump($insurance);
+   ?>
+
         <div class="col-4 d-flex p-3 justify-content-center">
             <div class="p-2">
 
@@ -15,7 +18,7 @@ $contracts = $insurance->getContracts();
                 <h2><?php echo $name ?></h2>
 
                 <?php foreach ($contracts as $contract): ?>
-                    <p>Contrat : <?=($contract["contract_name"]) ?> - Type de vehicule : <?=($contract["vehicle_type"]) ?> - Prix : <?=($contract["price"]) ?> €</p>
+                    <p>Contrat : <?=($contract->getName()) ?> </p>
                 <?php endforeach; ?>
 
                 <a class="btn btn-primary" href="index.php">RETOUR ACCUEIL</a>

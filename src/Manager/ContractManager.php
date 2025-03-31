@@ -34,4 +34,7 @@ class ContractManager extends DatabaseManager
         }
         return $contracts;
     }
+
+
+    // TODO Select contracts by assurance id
 }
