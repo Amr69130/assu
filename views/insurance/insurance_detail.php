@@ -1,8 +1,4 @@
 <?php
-/**
- * @var Insurance $insurance
- */
-
 $title = $insurance->getName() . " - Détails";
 require_once __DIR__ . '/../../views/block/header.php';
 $name = $insurance->getName();
