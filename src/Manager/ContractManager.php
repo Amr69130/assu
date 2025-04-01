@@ -35,6 +35,7 @@ class ContractManager extends DatabaseManager
     // Select contracts by assurance id
     public function getContractsByInsuranceId($insuranceId): array
     {
+
         $sql = "SELECT * FROM contract WHERE insurance_id = :insurance_id";
         $query = self::getConnexion()->prepare($sql);
         $query->execute([

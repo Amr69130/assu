@@ -46,3 +46,17 @@ INSERT INTO contract_price (contract_id, vehicle_type, price) VALUES
 (6, 'city_car', 47), (6, 'sedan', 63), (6, 'utility', 72),
 (7, 'city_car', 23), (7, 'sedan', 32), (7, 'utility', 39),
 (8, 'city_car', 48), (8, 'sedan', 67), (8, 'utility', 78);
+
+
+
+-- User management
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    role ENUM('superadmin', 'admin') NOT NULL,
+    insurance_id INT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (insurance_id) REFERENCES insurance(id) ON DELETE SET NULL
+);
